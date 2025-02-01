@@ -1,5 +1,5 @@
 <template>
-    <div role="alert" class="alert alert-success" v-if="!isError">
+    <div role="alert" class="alert alert-success my-2" v-if="!isError">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6 shrink-0 stroke-current"
@@ -16,7 +16,7 @@
         <span>{{ content }}</span>
     </div>
     <div v-else>
-        <div role="alert" class="alert alert-error">
+        <div role="alert" class="alert alert-error my-2">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6 shrink-0 stroke-current"

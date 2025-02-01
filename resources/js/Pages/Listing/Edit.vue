@@ -1,6 +1,6 @@
 <template>
-    <h2 class="mb-5 text-2xl font-bold">Listing - Create</h2>
-    <form @submit.prevent="form.post('/listing')">
+    <h2 class="text-2xl font-bold">Listing - Edit</h2>
+    <form @submit.prevent="form.put(`/listing/${listing.id}`)">
         <CustomInput
             label="How many beds exist?"
             type="number"
@@ -57,31 +57,28 @@
             v-model.number="form.price"
             :error="page.props.errors.price"
         />
-        <button type="submit" class="btn btn-accent">Create</button>
+        <button type="submit" class="btn btn-accent">Save</button>
     </form>
 </template>
-
 <script lang="ts" setup>
 import CustomInput from '@/Components/CustomInput.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
-import { ListingForm } from '@/types/types';
+import { Listing, ListingForm } from '@/types/types';
 import { useForm, usePage } from '@inertiajs/vue3';
 
-const form = useForm<ListingForm>({
-    beds: null,
-    baths: null,
-    area: null,
-    city: null,
-    street: null,
-    code: null,
-    street_nr: null,
-    price: null,
-});
-</script>
-
-<script lang="ts">
-export default {
-    layout: MainLayout,
-};
+defineOptions({ layout: MainLayout });
 const page = usePage();
+const props = defineProps<{
+    listing: Listing;
+}>();
+const form = useForm<ListingForm>({
+    beds: props.listing.beds,
+    baths: props.listing.baths,
+    area: props.listing.area,
+    city: props.listing.city,
+    street: props.listing.street,
+    code: props.listing.code,
+    street_nr: props.listing.street_nr,
+    price: props.listing.price,
+});
 </script>

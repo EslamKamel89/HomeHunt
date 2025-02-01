@@ -6,8 +6,8 @@
             </div>
             <div class="flex-none">
                 <ul class="menu menu-horizontal px-1">
-                    <li><Link href="/">Main Page</Link></li>
-                    <li><Link href="/hello">Show Page</Link></li>
+                    <li><Link href="/">Home Page</Link></li>
+                    <li><Link href="/listing">Listings</Link></li>
                     <li>
                         <label class="flex cursor-pointer gap-2">
                             <svg

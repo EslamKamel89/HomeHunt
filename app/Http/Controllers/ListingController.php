@@ -42,16 +42,32 @@ class ListingController extends Controller {
 	}
 
 	public function edit( Listing $listing ) {
-		//
+		return inertia( 'Listing/Edit', [ 
+			'listing' => $listing
+		] );
 	}
 
 
 	public function update( Request $request, Listing $listing ) {
+		$data = $request->validate( [ 
+			'beds' => [ 'required', 'numeric',],
+			'baths' => [ 'required', 'numeric',],
+			'area' => [ 'required', 'numeric',],
+			'city' => [ 'required', 'max:255' ],
+			'code' => [ 'required', 'max:255' ],
+			'street' => [ 'required', 'max:255' ],
+			'street_nr' => [ 'required', 'numeric',],
+			'price' => [ 'required', 'numeric',],
+		] );
+		$listing->update( $data );
+		return redirect()->route( 'listing.index' )->with( [ 'success' => 'Listing Updated Successfully' ] );
 
 	}
 
 
 	public function destroy( Listing $listing ) {
+		$listing->delete();
+		return redirect()->route( 'listing.index' )->with( [ 'success' => 'Listing Deleted Successfully' ] );
 
 	}
 }
