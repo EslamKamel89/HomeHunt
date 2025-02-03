@@ -11,7 +11,7 @@
     <template v-if="error">
         <Alert :isError="true" :content="error ?? 'Error'"></Alert>
     </template>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <ListingItem
             v-for="listing in listings"
             :key="listing.id"

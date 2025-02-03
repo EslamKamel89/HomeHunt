@@ -5,7 +5,13 @@
                 <Link :href="route('listing.show', { id: listing.id })">
                     <ListingAddress :listing />
                 </Link>
-                <Price :price="listing.price" class="text-2xl font-bold" />
+                <div class="flex items-center gap-1">
+                    <Price :price="listing.price" class="text-2xl font-bold" />
+                    <div class="text-xs text-gray-500">
+                        <Price :price="monthlyPayment" /> PM
+                    </div>
+                </div>
+
                 <ListingSpace :listing="listing" />
             </div>
             <div class="ml-2 flex gap-2 sm:flex-col">
@@ -29,13 +35,16 @@
 </template>
 
 <script lang="ts" setup>
+import useMonthlyPayment from '@/Composables/useMonthlyPayment';
 import { Listing } from '@/types/types';
 import ListingAddress from './ListingAddress.vue';
 import ListingSpace from './ListingSpace.vue';
 import Price from './Price.vue';
 import Box from './UI/Box.vue';
 
-defineProps<{
+const props = defineProps<{
     listing: Listing;
 }>();
+
+const { monthlyPayment } = useMonthlyPayment(props.listing.price, 2.5, 25);
 </script>
