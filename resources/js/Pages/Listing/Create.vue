@@ -1,12 +1,16 @@
 <template>
     <h2 class="mb-5 text-2xl font-bold">Listing - Create</h2>
-    <form @submit.prevent="form.post('/listing')">
+    <form
+        @submit.prevent="form.post('/listing')"
+        class="flex flex-col gap-4 md:grid md:grid-cols-6"
+    >
         <CustomInput
             label="How many beds exist?"
             type="number"
             placeholder="Beds"
             v-model.number="form.beds"
             :error="page.props.errors.beds"
+            class="col-span-3"
         />
         <CustomInput
             label="How many baths exist?"
@@ -14,6 +18,7 @@
             placeholder="Baths"
             v-model.number="form.baths"
             :error="page.props.errors.baths"
+            class="col-span-3"
         />
         <CustomInput
             label="What's the property area?"
@@ -21,6 +26,7 @@
             placeholder="Area"
             v-model.number="form.area"
             :error="page.props.errors.area"
+            class="col-span-3"
         />
         <CustomInput
             label="Enter City"
@@ -28,6 +34,7 @@
             placeholder="City"
             v-model="form.city"
             :error="page.props.errors.city"
+            class="col-span-3"
         />
         <CustomInput
             label="Enter Code"
@@ -35,6 +42,7 @@
             placeholder="Code"
             v-model="form.code"
             :error="page.props.errors.code"
+            class="col-span-3"
         />
         <CustomInput
             label="Enter Street Name"
@@ -42,6 +50,7 @@
             placeholder="Street Name"
             v-model="form.street"
             :error="page.props.errors.street"
+            class="col-span-3"
         />
         <CustomInput
             label="Enter Street Number"
@@ -49,6 +58,7 @@
             placeholder="Street Number"
             v-model.number="form.street_nr"
             :error="page.props.errors.street_nr"
+            class="col-span-3"
         />
         <CustomInput
             label="Enter Property Price"
@@ -56,8 +66,9 @@
             placeholder="Property Price"
             v-model.number="form.price"
             :error="page.props.errors.price"
+            class="col-span-3"
         />
-        <button type="submit" class="btn btn-accent">Create</button>
+        <button type="submit" class="btn btn-accent col-span-6">Create</button>
     </form>
 </template>
 

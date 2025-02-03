@@ -5,6 +5,7 @@
                 <Link :href="route('listing.show', { id: listing.id })">
                     <ListingAddress :listing />
                 </Link>
+                <Price :price="listing.price" class="text-2xl font-bold" />
                 <ListingSpace :listing="listing" />
             </div>
             <div class="ml-2 flex gap-2 sm:flex-col">
@@ -31,6 +32,7 @@
 import { Listing } from '@/types/types';
 import ListingAddress from './ListingAddress.vue';
 import ListingSpace from './ListingSpace.vue';
+import Price from './Price.vue';
 import Box from './UI/Box.vue';
 
 defineProps<{
