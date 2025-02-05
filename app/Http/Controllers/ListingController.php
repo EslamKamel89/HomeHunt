@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ListingController extends Controller {
+
+
 
 	public function index() {
 		return inertia( 'Listing/Index', [ 
@@ -30,12 +33,14 @@ class ListingController extends Controller {
 			'street_nr' => [ 'required', 'numeric',],
 			'price' => [ 'required', 'numeric',],
 		] );
-		$listing = Listing::create( $data );
+		$user = auth()->user();
+		$user->listings()->create( $data );
 		return redirect()->route( 'listing.index' )->with( [ 'success' => 'Listing Created Successfully' ] );
 	}
 
 
 	public function show( Listing $listing ) {
+		Gate::authorize( 'view', $listing );
 		return inertia( 'Listing/Show', [ 
 			'listing' => $listing,
 		] );

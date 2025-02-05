@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * 
@@ -35,12 +36,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Listing whereStreet($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Listing whereStreetNr($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Listing whereUpdatedAt($value)
+ * @property int $user_id
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Listing whereUserId($value)
  * @mixin \Eloquent
  */
 class Listing extends Model {
 	/** @use HasFactory<\Database\Factories\ListingFactory> */
 	use HasFactory;
 	protected $fillable = [ 
+		'user_id',
 		'beds',
 		'baths',
 		'area',
@@ -50,4 +55,8 @@ class Listing extends Model {
 		'street_nr',
 		'price',
 	];
+
+	public function user(): BelongsTo {
+		return $this->belongsTo( User::class);
+	}
 }

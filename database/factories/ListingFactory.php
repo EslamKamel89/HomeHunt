@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,7 @@ class ListingFactory extends Factory {
 	 */
 	public function definition(): array {
 		return [ 
+			'user_id' => User::inRandomOrder()->first()->id,
 			'beds' => fake()->numberBetween( 1, 10 ),
 			'baths' => fake()->numberBetween( 1, 5 ),
 			'area' => fake()->numberBetween( 200, 500 ),

@@ -19,7 +19,7 @@
                 placeholder="Please enter your email"
                 type="email"
                 class="col-span-3"
-                :error="$page.props.errors.eamil"
+                :error="$page.props.errors.email"
                 v-model="form.email"
             />
             <CustomInput
@@ -36,11 +36,17 @@
                 type="password"
                 class="col-span-3"
                 :error="$page.props.errors['password-confirm']"
-                v-model="form.password_confimation"
+                v-model="form.password_confirmation"
             />
+
             <button type="submit" class="btn btn-accent col-span-6">
                 Sign up
             </button>
+            <Link
+                :href="route('login')"
+                class="col-span-6 text-start text-xs text-gray-500"
+                >Already have an account! click here</Link
+            >
         </form>
     </div>
 </template>
@@ -56,16 +62,15 @@ type SignupForm = {
     name: string | null;
     email: string | null;
     password: string | null;
-    password_confimation: string | null;
+    password_confirmation: string | null;
 };
 const form = useForm<SignupForm>({
     name: null,
     email: null,
     password: null,
-    password_confimation: null,
+    password_confirmation: null,
 });
 const submit = () => {
-    // todo sign up functionality
-    // form.post(route('login'));
+    form.post(route('user-account.store'));
 };
 </script>

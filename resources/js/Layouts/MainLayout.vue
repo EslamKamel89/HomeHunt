@@ -16,6 +16,11 @@
                     <li><Link href="/">Home Page</Link></li>
                     <template v-if="!$page.props.auth.user">
                         <li><Link :href="route('login')">Sign in</Link></li>
+                        <li>
+                            <Link :href="route('user-account.create')"
+                                >Create account</Link
+                            >
+                        </li>
                     </template>
                     <template v-else>
                         <li>

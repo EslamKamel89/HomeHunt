@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder {
 			'name' => 'admin',
 			'email' => 'admin@gmail.com',
 		] );
+		User::factory( 10 )->create();
 		Listing::factory( 100 )->create();
 	}
 }

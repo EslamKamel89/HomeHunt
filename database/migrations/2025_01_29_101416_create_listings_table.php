@@ -11,6 +11,7 @@ return new class extends Migration {
 	public function up(): void {
 		Schema::create( 'listings', function (Blueprint $table) {
 			$table->id();
+			$table->foreignId( 'user_id' )->constrained()->onDelete( 'cascade' );
 			$table->unsignedTinyInteger( 'beds' );
 			$table->unsignedTinyInteger( 'baths' );
 			$table->unsignedInteger( 'area' );

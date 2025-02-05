@@ -10,7 +10,7 @@ class GenerateIdeHelper extends Command {
 	 *
 	 * @var string
 	 */
-	protected $signature = 'ideHelper:all';
+	protected $signature = 'eslam:all';
 
 	/**
 	 * The console command description.

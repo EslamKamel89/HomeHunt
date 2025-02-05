@@ -26,6 +26,11 @@
             <button type="submit" class="btn btn-accent col-span-6">
                 Sign in
             </button>
+            <Link
+                :href="route('user-account.create')"
+                class="col-span-6 text-start text-xs text-gray-500"
+                >Dont't Have an account! click here</Link
+            >
         </form>
     </div>
 </template>
