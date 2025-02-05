@@ -9,7 +9,7 @@
                 :type="type"
                 min="0"
                 :placeholder="placeholder"
-                class="input input-bordered w-full max-w-xs"
+                class="input input-bordered w-full"
                 :class="{ 'border-red-500': error }"
                 v-model="input"
             />
