@@ -13,7 +13,7 @@ class ListingController extends Controller {
 	public function index() {
 		Gate::authorize( 'viewAny', Listing::class);
 		return inertia( 'Listing/Index', [ 
-			'listings' => Listing::paginate()->latest()->get()
+			'listings' => $this->pr( Listing::latest()->paginate( 5 ) ),
 		] );
 	}
 
