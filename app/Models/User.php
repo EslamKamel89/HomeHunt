@@ -36,6 +36,8 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Listing> $listings
  * @property-read int|null $listings_count
+ * @property int $is_admin
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereIsAdmin($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable {
@@ -51,6 +53,7 @@ class User extends Authenticatable {
 		'name',
 		'email',
 		'password',
+		'is_admin',
 	];
 
 	/**

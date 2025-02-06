@@ -11,18 +11,21 @@ class ListingController extends Controller {
 
 
 	public function index() {
+		Gate::authorize( 'viewAny', Listing::class);
 		return inertia( 'Listing/Index', [ 
-			'listings' => Listing::latest()->get()
+			'listings' => Listing::paginate()->latest()->get()
 		] );
 	}
 
 
 	public function create() {
+		Gate::authorize( 'create', Listing::class);
 		return inertia( 'Listing/Create' );
 	}
 
 
 	public function store( Request $request ) {
+		Gate::authorize( 'create', Listing::class);
 		$data = $request->validate( [ 
 			'beds' => [ 'required', 'numeric',],
 			'baths' => [ 'required', 'numeric',],
@@ -47,6 +50,7 @@ class ListingController extends Controller {
 	}
 
 	public function edit( Listing $listing ) {
+		Gate::authorize( 'update', $listing );
 		return inertia( 'Listing/Edit', [ 
 			'listing' => $listing
 		] );
@@ -54,6 +58,7 @@ class ListingController extends Controller {
 
 
 	public function update( Request $request, Listing $listing ) {
+		Gate::authorize( 'update', $listing );
 		$data = $request->validate( [ 
 			'beds' => [ 'required', 'numeric',],
 			'baths' => [ 'required', 'numeric',],
@@ -71,6 +76,7 @@ class ListingController extends Controller {
 
 
 	public function destroy( Listing $listing ) {
+		Gate::authorize( 'delete', $listing );
 		$listing->delete();
 		return redirect()->route( 'listing.index' )->with( [ 'success' => 'Listing Deleted Successfully' ] );
 
