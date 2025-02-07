@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -10,11 +11,15 @@ class ListingController extends Controller {
 
 
 
-	public function index() {
+	public function index( Request $request ) {
 		Gate::authorize( 'viewAny', Listing::class);
+		$filters = $request->only( [ "priceFrom", "priceTo", "beds", "baths", "areaFrom", "areaTo",] );
+		$query = Listing::latest();
+		$query->filter( $filters );
 		return inertia( 'Listing/Index', [ 
-			'listings' => $this->pr( Listing::latest()->paginate( 5 ) ),
-		] );
+			'listings' => $query->paginate( 5 )->withQueryString(),
+			'filters' => $filters,
+		], );
 	}
 
 

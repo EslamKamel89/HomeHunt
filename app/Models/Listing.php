@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,6 +40,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $user_id
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Listing whereUserId($value)
+ * @method static Builder<static>|Listing filter(array $filters)
  * @mixin \Eloquent
  */
 class Listing extends Model {
@@ -55,6 +57,39 @@ class Listing extends Model {
 		'street_nr',
 		'price',
 	];
+
+	public function scopeFilter( Builder $query, array $filters ) {
+		$query->when(
+			$filters['priceFrom'] ?? false,
+			fn( Builder $q, $f ) => $q->where( 'price', '>=', $f ) )
+			->when(
+				$filters['priceTo'] ?? false,
+				fn( Builder $q, $f ) => $q->where( 'price', '<=', $f ) )
+			->when(
+				$filters['areaFrom'] ?? false,
+				fn( Builder $q, $f ) => $q->where( 'area', '>=', $f ) )
+			->when(
+				$filters['areaTo'] ?? false,
+				fn( Builder $q, $f ) => $q->where( 'area', '<=', $f ) )
+			->when(
+				$filters['beds'] ?? false,
+				function (Builder $q, $f) {
+					if ( $f === '6+' ) {
+						$q->where( 'beds', '>=', 6 );
+					} else {
+						$q->where( 'beds', $f );
+					}
+				} )
+			->when(
+				$filters['baths'] ?? false,
+				function (Builder $q, $f) {
+					if ( $f === '6+' ) {
+						$q->where( 'baths', '>=', 6 );
+					} else {
+						$q->where( 'baths', $f );
+					}
+				} );
+	}
 
 	public function user(): BelongsTo {
 		return $this->belongsTo( User::class);

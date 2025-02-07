@@ -2321,8 +2321,8 @@ namespace PHPSTORM_META {
     override(\optional(0), type(0));
 
             registerArgumentsSet('auth', 
-'viewAny','view','create','update','delete',
-'restore','forceDelete',);
+'before','viewAny','view','create','update',
+'delete','restore','forceDelete',);
         registerArgumentsSet('configs', 
 'app.name','app.env','app.debug','app.url','app.frontend_url',
 'app.asset_url','app.timezone','app.locale','app.fallback_locale','app.faker_locale',

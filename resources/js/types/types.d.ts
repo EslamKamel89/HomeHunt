@@ -39,3 +39,12 @@ export type ListingForm = {
     street_nr: number | null;
     price: number | null;
 };
+
+export type FiltersForm = {
+    priceFrom?: number | null;
+    priceTo?: number | null;
+    beds?: string | null;
+    baths?: string | null;
+    areaFrom?: number | null;
+    areaTo?: number | null;
+};

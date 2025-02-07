@@ -6,6 +6,7 @@
                 class="rounded-full border p-2"
                 :class="{ 'bg-blue-500 text-white': link.active }"
                 v-if="link.url && link.label !== '...'"
+                preserve-state
                 ><span v-html="link.label"></span
             ></Link>
             <div v-else-if="link.label === '...'">{{ link.label }}</div>

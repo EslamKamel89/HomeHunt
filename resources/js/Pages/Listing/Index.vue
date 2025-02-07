@@ -11,7 +11,7 @@
     <template v-if="error">
         <Alert :isError="true" :content="error ?? 'Error'"></Alert>
     </template>
-    <Filters />
+    <Filters :filters="filters" />
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <ListingItem
             v-for="listing in listings.data"
@@ -29,12 +29,13 @@ import Alert from '@/Components/Alert.vue';
 import ListingItem from '@/Components/ListingItem.vue';
 import PaginationComp from '@/Components/PaginationComp.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
-import { Listing, Pagination } from '@/types/types';
+import { FiltersForm, Listing, Pagination } from '@/types/types';
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import Filters from './Components/Filters.vue';
 defineProps<{
     listings: Pagination<Listing>;
+    filters?: FiltersForm;
 }>();
 
 const page = usePage();
