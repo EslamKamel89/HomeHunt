@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-5 flex justify-end gap-x-2">
+    <div class="mt-5 flex justify-end gap-x-2" v-if="links.length > 3">
         <div v-for="(link, index) in links" :key="index" class="">
             <Link
                 :href="link.url"
@@ -12,6 +12,7 @@
             <div v-else-if="link.label === '...'">{{ link.label }}</div>
         </div>
     </div>
+    <div v-else></div>
 </template>
 
 <script lang="ts" setup>

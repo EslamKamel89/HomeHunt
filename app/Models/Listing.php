@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $beds
@@ -41,11 +43,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Listing whereUserId($value)
  * @method static Builder<static>|Listing filter(array $filters)
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static Builder<static>|Listing onlyTrashed()
+ * @method static Builder<static>|Listing whereDeletedAt($value)
+ * @method static Builder<static>|Listing withTrashed()
+ * @method static Builder<static>|Listing withoutTrashed()
  * @mixin \Eloquent
  */
 class Listing extends Model {
 	/** @use HasFactory<\Database\Factories\ListingFactory> */
-	use HasFactory;
+	use HasFactory, SoftDeletes;
 	protected $fillable = [ 
 		'user_id',
 		'beds',
@@ -57,6 +64,8 @@ class Listing extends Model {
 		'street_nr',
 		'price',
 	];
+
+	protected $sortable = [ 'price', 'created_at' ];
 
 	public function scopeFilter( Builder $query, array $filters ) {
 		$query->when(
@@ -87,6 +96,14 @@ class Listing extends Model {
 						$q->where( 'baths', '>=', 6 );
 					} else {
 						$q->where( 'baths', $f );
+					}
+				} )->when( $filters['deleted'] ?? false, function (Builder $q, $f) {
+					return $q->withTrashed()->where( 'deleted_at', '!=', null );
+				} )->when( $filters['by'] ?? false, function (Builder $q, $f) use ($filters) {
+					if ( collect( $this->sortable )->contains( $f ) ) {
+						return $q->orderBy( $f, Arr::get( $filters, 'order' ) === 'desc' ? 'desc' : 'asc' );
+					} else {
+						return $q;
 					}
 				} );
 	}

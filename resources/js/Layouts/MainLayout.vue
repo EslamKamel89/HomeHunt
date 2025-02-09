@@ -34,6 +34,11 @@
                     </template>
                     <template v-if="user">
                         <li>
+                            <Link :href="route('realtor-listing.index')"
+                                >Your Listings</Link
+                            >
+                        </li>
+                        <li>
                             <details>
                                 <summary>Listing</summary>
                                 <ul class="rounded-t-none bg-base-100 p-2">

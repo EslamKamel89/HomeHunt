@@ -1,7 +1,7 @@
 <template>
     <Box class="mt-2">
-        <div class="flex items-center justify-between">
-            <div class="flex flex-col gap-y-2">
+        <div class="itmes-center flex flex-col justify-center md:flex-row">
+            <div class="flex flex-col items-center justify-center gap-y-2">
                 <Link :href="route('listing.show', { id: listing.id })">
                     <ListingAddress :listing />
                 </Link>
@@ -14,22 +14,24 @@
 
                 <ListingSpace :listing="listing" />
             </div>
-            <!-- <div class="ml-2 flex gap-2 sm:flex-col">
+            <div
+                class="mx-auto mt-2 flex items-stretch justify-center gap-2 md:flex-col"
+            >
                 <Link
                     class="btn btn-outline"
-                    :href="route('listing.edit', { id: listing.id })"
+                    :href="route('realtor-listing.edit', { id: listing.id })"
                 >
                     Edit
                 </Link>
                 <Link
                     class="btn btn-error text-white"
                     method="delete"
-                    :href="route('listing.destroy', { id: listing.id })"
+                    :href="route('realtor-listing.destroy', { id: listing.id })"
                     preserve-state
                     preserve-scroll
                     >Delete</Link
                 >
-            </div> -->
+            </div>
         </div>
     </Box>
 </template>
@@ -45,6 +47,5 @@ import Box from './UI/Box.vue';
 const props = defineProps<{
     listing: Listing;
 }>();
-
 const { monthlyPayment } = useMonthlyPayment(props.listing.price, 2.5, 25);
 </script>
