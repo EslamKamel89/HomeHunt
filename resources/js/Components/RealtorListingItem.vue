@@ -1,8 +1,18 @@
 <template>
-    <Box class="mt-2">
-        <div class="itmes-center flex flex-col justify-center md:flex-row">
-            <div class="flex flex-col items-center justify-center gap-y-2">
-                <Link :href="route('listing.show', { id: listing.id })">
+    <Box
+        class="mt-2"
+        :class="{
+            'border border-dashed border-red-500 opacity-50 shadow-md shadow-red-200':
+                listing.deleted_at,
+        }"
+    >
+        <div
+            class="itmes-center flex flex-col justify-center md:flex-row md:justify-between"
+        >
+            <div
+                class="flex flex-col items-center justify-center gap-y-2 text-center"
+            >
+                <Link :href="route('realtor-listing.show', { id: listing.id })">
                     <ListingAddress :listing />
                 </Link>
                 <div class="flex items-center gap-1">
@@ -18,18 +28,40 @@
                 class="mx-auto mt-2 flex items-stretch justify-center gap-2 md:flex-col"
             >
                 <Link
+                    class="btn btn-info text-white"
+                    :href="route('realtor-listing.edit', { id: listing.id })"
+                >
+                    Upload
+                </Link>
+                <Link
                     class="btn btn-outline"
                     :href="route('realtor-listing.edit', { id: listing.id })"
                 >
                     Edit
                 </Link>
                 <Link
-                    class="btn btn-error text-white"
-                    method="delete"
-                    :href="route('realtor-listing.destroy', { id: listing.id })"
-                    preserve-state
+                    v-if="listing.deleted_at"
+                    class="btn btn-success text-white"
+                    method="put"
+                    :href="
+                        route(
+                            'realtor-listing.restore',
+
+                            { id: listing.id },
+                        )
+                    "
+                    as="button"
                     preserve-scroll
-                    >Delete</Link
+                    >{{ 'Restore' }}</Link
+                >
+                <Link
+                    v-else
+                    class="btn btn-error text-white"
+                    :method="'delete'"
+                    :href="route('realtor-listing.destroy', { id: listing.id })"
+                    as="button"
+                    preserve-scroll
+                    >{{ 'Delete' }}</Link
                 >
             </div>
         </div>

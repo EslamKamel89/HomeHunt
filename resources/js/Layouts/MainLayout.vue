@@ -48,7 +48,10 @@
                                         >
                                     </li>
                                     <li>
-                                        <Link :href="route('listing.create')"
+                                        <Link
+                                            :href="
+                                                route('realtor-listing.create')
+                                            "
                                             >Add</Link
                                         >
                                     </li>

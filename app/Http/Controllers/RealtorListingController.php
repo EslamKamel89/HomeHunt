@@ -20,22 +20,32 @@ class RealtorListingController extends Controller {
 		$listings = Listing::where( 'user_id', auth()->id() )
 			->filter( $filters )
 			->paginate( 5 )->withQueryString();
-		$filters = $request->only( [ 'deleted' ] );
+		$filters = $request->only( [ 'deleted', 'order', 'by' ] );
 		return inertia( 'Realtor/Index', get_defined_vars() );
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 */
+
 	public function create() {
-		//
+		Gate::authorize( 'create', Listing::class);
+		return inertia( 'Listing/Create' );
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 */
+
 	public function store( Request $request ) {
-		//
+		Gate::authorize( 'create', Listing::class);
+		$data = $request->validate( [ 
+			'beds' => [ 'required', 'numeric',],
+			'baths' => [ 'required', 'numeric',],
+			'area' => [ 'required', 'numeric',],
+			'city' => [ 'required', 'max:255' ],
+			'code' => [ 'required', 'max:255' ],
+			'street' => [ 'required', 'max:255' ],
+			'street_nr' => [ 'required', 'numeric',],
+			'price' => [ 'required', 'numeric',],
+		] );
+		$user = auth()->user();
+		$user->listings()->create( $data );
+		return redirect()->route( 'listing.index' )->with( [ 'success' => 'Listing Created Successfully' ] );
 	}
 
 	public function show( Listing $listing ) {
@@ -72,9 +82,15 @@ class RealtorListingController extends Controller {
 
 
 	public function destroy( Listing $listing ) {
+		info( 'hello' );
 		Gate::authorize( 'delete', $listing );
 		$listing->delete();
-		return redirect()->route( 'realtor-listing.index' )->with( [ 'success' => 'Listing Deleted Successfully' ] );
+		return redirect()->route( 'realtor-listing.index', )->with( [ 'success' => 'Listing Deleted Successfully' ] );
 
+	}
+	public function restore( Listing $listing ) {
+		$listing->restore();
+		return redirect()
+			->route( 'realtor-listing.index', )->with( [ 'success', 'Listing Restored Successfully' ] );
 	}
 }

@@ -12,7 +12,11 @@
             :content="$page.props?.flash?.error ?? 'Error'"
         ></Alert>
     </template>
-    <RealtorFilters :deleted="filters?.deleted == 'true' ? true : false" />
+    <RealtorFilters
+        :deleted="filters?.deleted == 'true' ? true : false"
+        :by="filters?.by ?? ''"
+        :order="filters?.order ?? ''"
+    />
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <RealtorListingItem
             v-for="listing in listings.data"
@@ -38,6 +42,8 @@ const props = defineProps<{
     listings: Pagination<Listing>;
     filters?: {
         deleted?: number | string;
+        by?: string;
+        order?: string;
     };
 }>();
 // pr(props?.listings.data.length, 'props in index.vue');

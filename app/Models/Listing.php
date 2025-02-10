@@ -98,7 +98,8 @@ class Listing extends Model {
 						$q->where( 'baths', $f );
 					}
 				} )->when( $filters['deleted'] ?? false, function (Builder $q, $f) {
-					return $q->withTrashed()->where( 'deleted_at', '!=', null );
+					return $q->withTrashed();
+					// ->where( 'deleted_at', '!=', null );
 				} )->when( $filters['by'] ?? false, function (Builder $q, $f) use ($filters) {
 					if ( collect( $this->sortable )->contains( $f ) ) {
 						return $q->orderBy( $f, Arr::get( $filters, 'order' ) === 'desc' ? 'desc' : 'asc' );

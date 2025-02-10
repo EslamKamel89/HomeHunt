@@ -28,6 +28,7 @@ export type Listing = {
     street: string;
     street_nr: number;
     price: number;
+    deleted_at: string | null;
 };
 export type ListingForm = {
     beds: number | null;

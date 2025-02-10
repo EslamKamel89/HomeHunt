@@ -19,6 +19,7 @@
                 v-model="form.by"
                 class="select select-primary w-32 max-w-xs rounded-r-none"
             >
+                <option disabled value="">Filter By</option>
                 <option value="created_at">Added</option>
                 <option value="price">Price</option>
             </select>
@@ -26,6 +27,7 @@
                 v-model="form.order"
                 class="select select-primary w-32 max-w-xs rounded-l-none"
             >
+                <option disabled value="">Order By</option>
                 <option
                     v-for="option in sortLabels[form.by]"
                     :value="option.value"
@@ -61,11 +63,13 @@ const sortLabels: Record<
 
 const props = defineProps<{
     deleted: boolean;
+    by: string;
+    order: string;
 }>();
 const form = reactive({
     deleted: props.deleted,
-    by: 'creaetd_at',
-    order: 'desc',
+    by: props.by,
+    order: props.order,
 });
 watch(
     form,

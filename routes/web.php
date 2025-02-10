@@ -16,10 +16,13 @@ Route::controller( IndexController::class)->group( function () {
 	Route::get( '/', 'index' );
 	// Route::get( '/hello', 'show' );
 } );
-Route::resource( '/listing', ListingController::class)->middleware( 'auth' )->except( [ 'destroy', 'update', 'edit' ] );
+Route::resource( '/listing', ListingController::class)->middleware( 'auth' )->only( [ 'index', 'show' ] );
+Route::put( '/realtor-listing/{listing}/restore', [ RealtorListingController::class, 'restore' ] )
+	->name( 'realtor-listing.restore' )->withTrashed();
 Route::resource( '/realtor-listing', RealtorListingController::class)->parameter( 'realtor-listing', 'listing' )
-	->only( [ 'index', 'destroy', 'update', 'edit' ] )
-	->middleware( 'auth' );
+	// ->only( [ 'index', 'destroy', 'update', 'edit', 'show' ] )
+	->middleware( 'auth' )
+	->withTrashed();
 Route::prefix( '/auth' )
 	->group( function () {
 		Route::controller( AuthController::class)->group( function () {
