@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $beds
@@ -48,6 +49,8 @@ use Illuminate\Support\Arr;
  * @method static Builder<static>|Listing whereDeletedAt($value)
  * @method static Builder<static>|Listing withTrashed()
  * @method static Builder<static>|Listing withoutTrashed()
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ListingImage> $listingImages
+ * @property-read int|null $listing_images_count
  * @mixin \Eloquent
  */
 class Listing extends Model {
@@ -111,5 +114,9 @@ class Listing extends Model {
 
 	public function user(): BelongsTo {
 		return $this->belongsTo( User::class);
+	}
+
+	public function listingImages(): HasMany {
+		return $this->hasMany( ListingImage::class);
 	}
 }

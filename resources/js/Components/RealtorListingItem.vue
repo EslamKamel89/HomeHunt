@@ -29,7 +29,7 @@
             >
                 <Link
                     class="btn btn-info text-white"
-                    :href="route('realtor-listing.edit', { id: listing.id })"
+                    :href="route('listing.image.create', { id: listing.id })"
                 >
                     Upload
                 </Link>
