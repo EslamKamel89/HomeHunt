@@ -63,15 +63,31 @@
             </div>
         </div>
         <main class="px-8">
+            <div>
+                <template v-if="success">
+                    <Alert
+                        :isError="false"
+                        :content="success ?? 'Success'"
+                    ></Alert>
+                </template>
+                <template v-if="error">
+                    <Alert :isError="true" :content="error ?? 'Error'"></Alert>
+                </template>
+            </div>
             <slot></slot>
         </main>
     </div>
 </template>
 <script setup lang="ts">
+import Alert from '@/Components/Alert.vue';
 import { User } from '@/types';
+import pr from '@/Utils/pr';
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const page = usePage();
 const user = computed<User | null>(() => page.props.auth?.user);
+
+const error = computed(() => page.props.flash.error);
+const success = computed(() => pr(page.props.flash.success));
 </script>

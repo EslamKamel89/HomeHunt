@@ -33,6 +33,7 @@
         "vue-tsc": "^2.0.24"
     },
     "dependencies": {
+        "@heroicons/vue": "^2.2.0",
         "lodash": "^4.17.21"
     }
 }

@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
+Route::get( '/test', function () {
+	/** @var ListingImage $image  */
+	$image = ListingImage::all()->first();
+	dump( str( $image->filename )->explode( 'storage/' )->last() );
+} );
+
 Route::controller( IndexController::class)->group( function () {
 	Route::get( '/', 'index' );
 	// Route::get( '/hello', 'show' );
@@ -28,7 +34,7 @@ Route::resource( '/realtor-listing', RealtorListingController::class)->parameter
 Route::middleware( 'auth' )->group( function () {
 	Route::resource( 'listing.image', RealtorListingImageController::class)
 		->parameter( 'image', 'listing-image' )
-		->only( [ 'create', 'store', 'show',] );
+		->only( [ 'create', 'store', 'show', 'destroy' ] );
 } );
 
 Route::prefix( '/auth' )

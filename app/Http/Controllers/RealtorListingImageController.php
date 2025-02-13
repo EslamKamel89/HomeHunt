@@ -6,6 +6,7 @@ use App\Models\Listing;
 use App\Models\ListingImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class RealtorListingImageController extends Controller {
 	public function index() {
@@ -13,6 +14,7 @@ class RealtorListingImageController extends Controller {
 
 	public function create( Listing $listing ) {
 		$csrf = csrf_token();
+		$listing->load( [ 'listingImages' ] );
 		return inertia( 'Realtor/ListingImage/Create', get_defined_vars() );
 	}
 
@@ -32,7 +34,7 @@ class RealtorListingImageController extends Controller {
 			}
 			ListingImage::insert( $imagesArr->toArray() );
 		}
-		return redirect()->route( 'realtor-listing.index' )->with( [ 'success' => 'images uploaded successfully' ] );
+		return redirect()->back()->with( [ 'success' => 'images uploaded successfully' ] );
 	}
 
 	public function show( ListingImage $listingImage ) {
@@ -44,6 +46,9 @@ class RealtorListingImageController extends Controller {
 	public function update( Request $request, ListingImage $listingImage ) {
 	}
 
-	public function destroy( ListingImage $listingImage ) {
+	public function destroy( Listing $listing, ListingImage $listingImage ) {
+		Storage::disk( 'public' )->delete( str( $listingImage->filename )->explode( 'storage/' )->last() );
+		$listingImage->delete();
+		return redirect()->back()->with( [ 'success' => 'Image deleted successfully' ] );
 	}
 }

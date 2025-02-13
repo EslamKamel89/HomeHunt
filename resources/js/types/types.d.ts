@@ -29,6 +29,15 @@ export type Listing = {
     street_nr: number;
     price: number;
     deleted_at: string | null;
+    listing_images?: ListingImage[];
+};
+
+export type ListingImage = {
+    created_at: string;
+    filename: string;
+    id: number;
+    listing_id: number;
+    updated_at: string;
 };
 export type ListingForm = {
     beds: number | null;
