@@ -29,6 +29,7 @@ export type Listing = {
     street_nr: number;
     price: number;
     deleted_at: string | null;
+    listing_images_count?: number | null;
     listing_images?: ListingImage[];
 };
 

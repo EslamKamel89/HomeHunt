@@ -19,6 +19,7 @@ class RealtorListingController extends Controller {
 		];
 		$listings = Listing::where( 'user_id', auth()->id() )
 			->filter( $filters )
+			->withCount( 'listingImages' )
 			->paginate( 5 )->withQueryString();
 		$filters = $request->only( [ 'deleted', 'order', 'by' ] );
 		return inertia( 'Realtor/Index', get_defined_vars() );
@@ -50,7 +51,9 @@ class RealtorListingController extends Controller {
 
 	public function show( Listing $listing ) {
 		Gate::authorize( 'view', $listing );
-		$listing->load( [ 'listingImages' ] );
+		$listing
+			->load( [ 'listingImages' ] )
+			->loadCount( 'listingImages' );
 		return inertia( 'Listing/Show', [ 
 			'listing' => $listing,
 		] );

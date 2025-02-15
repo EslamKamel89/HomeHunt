@@ -15,7 +15,9 @@ class ListingController extends Controller {
 		Gate::authorize( 'viewAny', Listing::class);
 		$filters = $request->only( [ "priceFrom", "priceTo", "beds", "baths", "areaFrom", "areaTo",] );
 		$query = Listing::latest();
-		$query->filter( $filters );
+		$query
+			->withCount( 'listingImages' )
+			->filter( $filters );
 		return inertia( 'Listing/Index', [ 
 			'listings' => $query->paginate( 5 )->withQueryString(),
 			'filters' => $filters,
