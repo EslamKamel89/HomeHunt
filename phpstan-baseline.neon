@@ -1,0 +1,43 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#1 \$user of class Illuminate\\Auth\\Events\\Verified constructor expects Illuminate\\Contracts\\Auth\\MustVerifyEmail, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Auth/VerifyEmailController.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$title with type mixed is not subtype of native type string\|null\.$#'
+			identifier: parameter.phpDocType
+			count: 1
+			path: app/Http/Controllers/Controller.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\:\:withTrashed\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Models/Listing.php
+
+		-
+			message: '#^PHPDoc tag @use has invalid type Database\\Factories\\ListgingImageFactory\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Models/ListingImage.php
+
+		-
+			message: '#^Type Database\\Factories\\ListgingImageFactory in generic type Illuminate\\Database\\Eloquent\\Factories\\HasFactory\<Database\\Factories\\ListgingImageFactory\> in PHPDoc tag @use is not subtype of template type TFactory of Illuminate\\Database\\Eloquent\\Factories\\Factory of trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: app/Models/ListingImage.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$listing with type mixed is not subtype of native type App\\Models\\Listing\.$#'
+			identifier: parameter.phpDocType
+			count: 1
+			path: app/Policies/ListingPolicy.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$user with type mixed is not subtype of native type App\\Models\\User\|null\.$#'
+			identifier: parameter.phpDocType
+			count: 3
+			path: app/Policies/ListingPolicy.php

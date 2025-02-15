@@ -1,0 +1,28 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+parameters:
+
+    paths:
+        - app/
+
+    # Level 10 is the highest level
+    level: 5
+
+    ignoreErrors:
+        - '#PHPDoc tag @var#'
+        - '#PHPDoc tag @property-read for *#'
+        - '# *referenced with incorrect case *#'
+        - '#Call to an undefined method Illuminate\\Support\\HigherOrder#'
+    #    - '#Call to an undefined method Illuminate\\.*#'
+    #    - '#Access to an undefined property Illuminate\\.*#'
+    #    - '#Constructor of class .* has an unused parameter .*#'
+    #    - '#Class .* referenced with incorrect case: .*#'
+    #    - '#PHPDoc tag @property-read for property .* contains unknown class .*#'
+    # Ignore unused parameters in constructors and functions
+        - '#Constructor of class .* has an unused parameter .*#'
+        - '#Unused parameter .* in class .*#'
+#
+#    excludePaths:
+#        - ./*/*/FileToBeExcluded.php

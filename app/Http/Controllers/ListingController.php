@@ -47,12 +47,13 @@ class ListingController extends Controller {
 	// }
 
 
-	public function show( Listing $listing ) {
-		Gate::authorize( 'view', $listing );
-		return inertia( 'Listing/Show', [ 
-			'listing' => $listing,
-		] );
-	}
+	// public function show( Listing $listing ) {
+	// 	dd( ListingController::class, $listing );
+	// 	Gate::authorize( 'view', $listing );
+	// 	return inertia( 'Listing/Show', [
+	// 		'listing' => $listing,
+	// 	] );
+	// }
 
 	// public function edit( Listing $listing ) {
 	// 	Gate::authorize( 'update', $listing );

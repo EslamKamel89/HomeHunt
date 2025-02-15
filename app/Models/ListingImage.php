@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $filename
@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class ListingImage extends Model {
 	/** @use HasFactory<\Database\Factories\ListgingImageFactory> */
-	use HasFactory;
+	use HasFactory; // @phpstan-ignore-line
 	protected $fillable = [ 
 		'filename',
 		'listing_id',

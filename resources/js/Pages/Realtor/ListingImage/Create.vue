@@ -4,13 +4,24 @@
     <Box>
         <template #header>Upload new images</template>
         <form @submit.prevent="uploadFiles" class="mt-2 flex items-start gap-2">
-            <input
-                type="file"
-                multiple
-                class="file-input file-input-bordered w-full max-w-xs"
-                @change="handleFileChange"
-                accept="image/*"
-            />
+            <div class="flex flex-col">
+                <input
+                    type="file"
+                    multiple
+                    class="file-input file-input-bordered w-full max-w-xs"
+                    @change="handleFileChange"
+                />
+                <template v-if="page.props.errors">
+                    <p v-for="(error, key) in page.props.errors" :key="key">
+                        <template v-if="key.includes('image')">
+                            <span class="text-xs text-red-500">{{
+                                error
+                            }}</span>
+                        </template>
+                    </p>
+                </template>
+            </div>
+
             <div class="flex max-w-xs flex-col gap-y-2">
                 <button
                     class="btn btn-primary mx-3"
@@ -41,42 +52,15 @@
         class="mt-2"
     >
         <template #header>Current Listing Images</template>
-        <div class="grid grid-cols-3">
-            <Box
-                v-for="image in listing.listing_images"
-                :key="image.id"
-                class="relative flex flex-col items-center justify-between gap-y-2"
-            >
-                <div class="absolute top-0">
-                    <Link
-                        :href="
-                            route('listing.image.destroy', {
-                                listing: listing.id,
-                                listing_image: image.id,
-                            })
-                        "
-                        method="delete"
-                        as="button"
-                        class="btn btn-error bg-red-600 text-white"
-                    >
-                        <TrashIcon class="size-6 text-white" />
-                    </Link>
-                </div>
-                <img
-                    :src="image.filename"
-                    alt="Image Not Found"
-                    class="img-fluid min-h-full min-w-full rounded-lg object-cover shadow-lg"
-                />
-            </Box>
-        </div>
+        <ImagesDisplay :listing />
     </Box>
 </template>
 <script lang="ts" setup>
+import ImagesDisplay from '@/Components/ImagesDisplay.vue';
 import Box from '@/Components/UI/Box.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { Listing } from '@/types/types';
-import { TrashIcon } from '@heroicons/vue/24/solid';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 defineOptions({ layout: MainLayout });
 
 const props = defineProps<{
@@ -87,6 +71,8 @@ const props = defineProps<{
 const form = useForm({
     images: [] as File[],
 });
+
+const page = usePage();
 
 const handleFileChange = (event: Event) => {
     const target = event.target as HTMLInputElement;

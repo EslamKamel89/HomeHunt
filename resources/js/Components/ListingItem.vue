@@ -2,7 +2,7 @@
     <Box class="mt-2">
         <div class="flex items-center justify-between">
             <div class="flex flex-col gap-y-2">
-                <Link :href="route('listing.show', { id: listing.id })">
+                <Link :href="route('realtor-listing.show', { id: listing.id })">
                     <ListingAddress :listing />
                 </Link>
                 <div class="flex items-center gap-1">

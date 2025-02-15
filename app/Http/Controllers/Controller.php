@@ -8,10 +8,11 @@ namespace App\Http\Controllers;
 class Controller {
 	/**
 	 * Summary of pr
-	 * @param mixed $value
-	 * @param mixed $title
+	 * @template T
+	 * @param T $value
+	 * @param string|null $title
 	 * @param bool $json
-	 * @return mixed
+	 * @return T
 	 */
 	public static function pr( $value, ?string $title = null, bool $json = true ): mixed {
 		if ( $title ) {

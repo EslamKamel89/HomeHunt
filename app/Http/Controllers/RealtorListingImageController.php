@@ -7,7 +7,7 @@ use App\Models\ListingImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Validation\Rules\File as FileRule;
 class RealtorListingImageController extends Controller {
 	public function index() {
 	}
@@ -20,6 +20,9 @@ class RealtorListingImageController extends Controller {
 
 	public function store( Listing $listing, Request $request ) {
 		// dd( $request->all(), $request->allFiles() );
+		$request->validate( [ 
+			'images.*' => [ FileRule::image()->min( 5 )->max( 20000 ),]
+		] );
 		$imagesArr = collect( [] );
 		if ( $request->hasFile( 'images' ) ) {
 			/** @var \Illuminate\Http\UploadedFile $file */

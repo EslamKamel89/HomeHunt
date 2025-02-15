@@ -24,7 +24,7 @@ Route::controller( IndexController::class)->group( function () {
 	Route::get( '/', 'index' );
 	// Route::get( '/hello', 'show' );
 } );
-Route::resource( '/listing', ListingController::class)->middleware( 'auth' )->only( [ 'index', 'show' ] );
+Route::resource( '/listing', ListingController::class)->middleware( 'auth' )->only( [ 'index' ] );
 Route::put( '/realtor-listing/{listing}/restore', [ RealtorListingController::class, 'restore' ] )
 	->name( 'realtor-listing.restore' )->withTrashed();
 Route::resource( '/realtor-listing', RealtorListingController::class)->parameter( 'realtor-listing', 'listing' )

@@ -7,16 +7,22 @@ use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
 class ListingPolicy {
-	public function before( ?User $user, string $ability ) {
+	/**
+	 * @param User|null $user
+	 * @param string $ability
+	 *
+	 * @return bool
+	 */
+	public function before( ?User $user, string $ability ): bool|null {
 		if ( $user?->is_admin ) {
 			return true;
 		}
 		return null;
 	}
+
 	/**
-	 * viewAny
+	 * @param User|null $user
 	 *
-	 * @param  mixed $user
 	 * @return bool
 	 */
 	public function viewAny( ?User $user ): bool {
@@ -24,21 +30,21 @@ class ListingPolicy {
 	}
 
 
+
 	/**
-	 * view
+	 * @param User|null $user
+	 * @param Listing $listing
 	 *
-	 * @param  mixed $user
-	 * @param  mixed $listing
 	 * @return bool
 	 */
 	public function view( ?User $user, Listing $listing ): bool {
 		return true;
 	}
 
+
 	/**
-	 * create
+	 * @param User|null $user
 	 *
-	 * @param  mixed $user
 	 * @return bool
 	 */
 	public function create( ?User $user ): bool {
@@ -47,14 +53,26 @@ class ListingPolicy {
 
 
 
-	public function update( ?User $user, Listing $listing ) {
+	/**
+	 * @param User|null $user
+	 * @param Listing $listing
+	 *
+	 * @return Response
+	 */
+	public function update( ?User $user, Listing $listing ): Response {
 		return $listing->user_id === $user->id
 			? Response::allow()
 			: Response::deny( 'You do not own this listing' );
 	}
 
 
-	public function delete( ?User $user, Listing $listing ) {
+	/**
+	 * @param User|null $user
+	 * @param Listing $listing
+	 *
+	 * @return Response
+	 */
+	public function delete( ?User $user, Listing $listing ): Response {
 		return $listing->user_id === $user->id
 			? Response::allow()
 			: Response::deny( 'You do not own this listing' );
@@ -62,14 +80,26 @@ class ListingPolicy {
 
 
 
-	public function restore( ?User $user, Listing $listing ) {
+	/**
+	 * @param User|null $user
+	 * @param Listing $listing
+	 *
+	 * @return Response
+	 */
+	public function restore( ?User $user, Listing $listing ): Response {
 		return $listing->user_id === $user->id
 			? Response::allow()
 			: Response::deny( 'You do not own this listing' );
 	}
 
 
-	public function forceDelete( ?User $user, Listing $listing ) {
+	/**
+	 * @param User|null $user
+	 * @param Listing $listing
+	 *
+	 * @return Response
+	 */
+	public function forceDelete( ?User $user, Listing $listing ): Response {
 		return $listing->user_id === $user->id
 			? Response::allow()
 			: Response::deny( 'You do not own this listing' );

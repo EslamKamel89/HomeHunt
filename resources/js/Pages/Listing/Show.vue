@@ -1,9 +1,19 @@
 <template>
     <h2 class="text-2xl font-bold">Listing</h2>
     <div class="mt-4 flex flex-col-reverse gap-2 md:grid md:grid-cols-12">
-        <Box class="flex items-center justify-center md:col-span-7">
-            <div class="text-center font-medium text-gray-500">
-                No images found
+        <Box class="md:col-span-7">
+            <div class="">
+                <template
+                    v-if="
+                        listing.listing_images &&
+                        listing.listing_images.length > 0
+                    "
+                >
+                    <ImagesDisplay :listing />
+                </template>
+                <template v-else>
+                    <div>No images found</div>
+                </template>
             </div>
         </Box>
         <div class="md:col-span-5">
@@ -78,6 +88,7 @@
 
 <script lang="ts" setup>
 import CustomSlider from '@/Components/CustomSlider.vue';
+import ImagesDisplay from '@/Components/ImagesDisplay.vue';
 import ListingAddress from '@/Components/ListingAddress.vue';
 import ListingSpace from '@/Components/ListingSpace.vue';
 import Price from '@/Components/Price.vue';
