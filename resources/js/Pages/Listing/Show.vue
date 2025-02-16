@@ -82,6 +82,7 @@
                     </div>
                 </div>
             </Box>
+            <MakeOffer :listing="listing" />
         </div>
     </div>
 </template>
@@ -97,6 +98,7 @@ import useMonthlyPayment from '@/Composables/useMonthlyPayment';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { Listing } from '@/types/types';
 import { ref } from 'vue';
+import MakeOffer from './Components/MakeOffer.vue';
 
 const props = defineProps<{
     listing: Listing;
