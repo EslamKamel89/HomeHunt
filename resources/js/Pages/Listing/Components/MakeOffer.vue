@@ -2,11 +2,11 @@
     <Box>
         <template #header>Make an offer</template>
         <div>
-            <form>
+            <form @submit.prevent="makeOffer">
                 <CustomInput
                     label="Offer"
                     placeholder="Please Enter Offer"
-                    error=""
+                    :error="$page.props.errors.amount"
                     type="number"
                     v-model.number="form.amount"
                 />
@@ -18,9 +18,16 @@
                     v-model.number="form.amount"
                 />
                 <div class="flex items-center justify-between">
-                    <button type="submit" class="btn btn-primary my-4">
-                        Make an offer
-                    </button>
+                    <div class="flex items-center">
+                        <button type="submit" class="btn btn-primary my-4">
+                            Make an offer
+                        </button>
+                        <div
+                            v-if="$page.props.flash.success?.includes('Offer')"
+                        >
+                            <CheckBadgeIcon class="h-16 w-16 text-green-500" />
+                        </div>
+                    </div>
                     <button type="button" class="btn btn-ghost" @click="reset">
                         Reset
                     </button>
@@ -41,6 +48,7 @@ import Price from '@/Components/Price.vue';
 import Box from '@/Components/UI/Box.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { Listing } from '@/types/types';
+import { CheckBadgeIcon } from '@heroicons/vue/24/solid';
 import { useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
@@ -61,5 +69,11 @@ const min = computed(
 const max = computed(() => Math.floor((props.listing.price * 2) / 1000) * 1000);
 const reset = () => {
     form.amount = props.listing.price;
+};
+const makeOffer = () => {
+    form.post(route('listing.offer.store', { listing: props.listing.id }), {
+        preserveScroll: true,
+        preserveState: true,
+    });
 };
 </script>

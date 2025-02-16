@@ -21,7 +21,7 @@ class ListingOfferController extends Controller {
 			collect( $data )
 				->merge( [ 'user_id' => auth()->id() ] )->toArray()
 		);
-		return redirect()->back()->with( [ 'success', 'Offer was made' ] );
+		return redirect()->back()->with( [ 'success' => 'Offer was made' ] );
 	}
 
 	public function show( Offer $offer ) {
