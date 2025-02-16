@@ -51,6 +51,8 @@ use Illuminate\Support\Arr;
  * @method static Builder<static>|Listing withoutTrashed()
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ListingImage> $listingImages
  * @property-read int|null $listing_images_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Offer> $offers
+ * @property-read int|null $offers_count
  * @mixin \Eloquent
  */
 class Listing extends Model {
@@ -69,6 +71,18 @@ class Listing extends Model {
 	];
 
 	protected $sortable = [ 'price', 'created_at' ];
+
+	public function user(): BelongsTo {
+		return $this->belongsTo( User::class);
+	}
+
+	public function listingImages(): HasMany {
+		return $this->hasMany( ListingImage::class);
+	}
+
+	public function offers(): HasMany {
+		return $this->hasMany( Offer::class);
+	}
 
 	public function scopeFilter( Builder $query, array $filters ) {
 		$query->when(
@@ -101,8 +115,8 @@ class Listing extends Model {
 						$q->where( 'baths', $f );
 					}
 				} )->when( $filters['deleted'] ?? false, function (Builder $q, $f) {
-					return $q->withTrashed(); // @phpstan-ignore-line
-					// ->where( 'deleted_at', '!=', null );
+					// @phpstan-ignore-next-line
+					return $q->withTrashed();
 				} )->when( $filters['by'] ?? false, function (Builder $q, $f) use ($filters) {
 					if ( collect( $this->sortable )->contains( $f ) ) {
 						return $q->orderBy( $f, Arr::get( $filters, 'order' ) === 'desc' ? 'desc' : 'asc' );
@@ -112,11 +126,5 @@ class Listing extends Model {
 				} );
 	}
 
-	public function user(): BelongsTo {
-		return $this->belongsTo( User::class);
-	}
 
-	public function listingImages(): HasMany {
-		return $this->hasMany( ListingImage::class);
-	}
 }

@@ -38,6 +38,8 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $listings_count
  * @property int $is_admin
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereIsAdmin($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Offer> $offers
+ * @property-read int|null $offers_count
  * @mixin \Eloquent
  */
 class User extends Authenticatable {
@@ -80,5 +82,8 @@ class User extends Authenticatable {
 
 	public function listings(): HasMany {
 		return $this->hasMany( Listing::class);
+	}
+	public function offers(): HasMany {
+		return $this->hasMany( Offer::class);
 	}
 }

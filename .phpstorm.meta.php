@@ -2431,8 +2431,8 @@ namespace PHPSTORM_META {
 'signed','throttle','verified',);
         registerArgumentsSet('routes', 
 'debugbar.openhandler','debugbar.clockwork','debugbar.assets.css','debugbar.assets.js','debugbar.cache.delete',
-'debugbar.queries.explain','sanctum.csrf-cookie','listing.index',
-'listing.show','realtor-listing.restore','realtor-listing.index','realtor-listing.create','realtor-listing.store',
+'debugbar.queries.explain','sanctum.csrf-cookie',
+'listing.index','realtor-listing.restore','realtor-listing.index','realtor-listing.create','realtor-listing.store',
 'realtor-listing.show','realtor-listing.edit','realtor-listing.update','realtor-listing.destroy','listing.image.create',
 'listing.image.store','listing.image.show','listing.image.destroy','login','login.store',
 'logout','user-account.create','user-account.store','storage.local',);
