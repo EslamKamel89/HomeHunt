@@ -2,9 +2,20 @@
     <Box class="mt-2">
         <div class="flex items-center justify-between">
             <div class="flex flex-col gap-y-2">
-                <Link :href="route('realtor-listing.show', { id: listing.id })">
-                    <ListingAddress :listing />
-                </Link>
+                <div class="flex items-center gap-x-4">
+                    <Link
+                        :href="
+                            route('realtor-listing.show', { id: listing.id })
+                        "
+                    >
+                        <ListingAddress :listing />
+                    </Link>
+                    <template
+                        v-if="$page.props.auth.user.id == listing.user_id"
+                    >
+                        <div><BookmarkIcon class="h-8 w-8" /></div>
+                    </template>
+                </div>
                 <div class="flex items-center gap-1">
                     <Price :price="listing.price" class="text-2xl font-bold" />
                     <div class="text-xs text-gray-500">
@@ -37,6 +48,7 @@
 <script lang="ts" setup>
 import useMonthlyPayment from '@/Composables/useMonthlyPayment';
 import { Listing } from '@/types/types';
+import { BookmarkIcon } from '@heroicons/vue/24/solid';
 import ListingAddress from './ListingAddress.vue';
 import ListingSpace from './ListingSpace.vue';
 import Price from './Price.vue';

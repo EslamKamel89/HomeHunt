@@ -25,7 +25,7 @@
                         <div
                             v-if="$page.props.flash.success?.includes('Offer')"
                         >
-                            <CheckBadgeIcon class="h-16 w-16 text-green-500" />
+                            <CheckBadgeIcon class="h-12 w-12 text-green-500" />
                         </div>
                     </div>
                     <button type="button" class="btn btn-ghost" @click="reset">
@@ -50,7 +50,8 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import { Listing } from '@/types/types';
 import { CheckBadgeIcon } from '@heroicons/vue/24/solid';
 import { useForm } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { debounce } from 'lodash';
+import { computed, watch } from 'vue';
 
 defineOptions({
     layout: MainLayout,
@@ -76,4 +77,13 @@ const makeOffer = () => {
         preserveState: true,
     });
 };
+const emit = defineEmits<{
+    offerUpdated: [offer: number];
+}>();
+watch(
+    () => form.amount,
+    debounce(() => {
+        emit('offerUpdated', form.amount);
+    }, 500),
+);
 </script>

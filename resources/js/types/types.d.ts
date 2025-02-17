@@ -20,6 +20,7 @@ export type Pagination<T> = {
 };
 export type Listing = {
     id: number;
+    user_id: number;
     beds: number;
     baths: number;
     area: number;

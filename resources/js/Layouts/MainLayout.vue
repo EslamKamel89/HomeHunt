@@ -66,12 +66,17 @@
             <div>
                 <template v-if="success">
                     <Alert
+                        class="text-white"
                         :isError="false"
                         :content="success ?? 'Success'"
                     ></Alert>
                 </template>
                 <template v-if="error">
-                    <Alert :isError="true" :content="error ?? 'Error'"></Alert>
+                    <Alert
+                        class="text-white"
+                        :isError="true"
+                        :content="error ?? 'Error'"
+                    ></Alert>
                 </template>
             </div>
             <slot></slot>
