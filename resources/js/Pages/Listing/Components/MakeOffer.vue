@@ -1,5 +1,5 @@
 <template>
-    <Box>
+    <Box class="mt-2">
         <template #header>Make an offer</template>
         <div>
             <form @submit.prevent="makeOffer">

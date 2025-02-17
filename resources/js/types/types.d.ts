@@ -60,3 +60,13 @@ export type FiltersForm = {
     areaFrom?: number | null;
     areaTo?: number | null;
 };
+export type Offer = {
+    id: number | null;
+    user_id: number | null;
+    listing_id: number | null;
+    amount: number | null;
+    accepted_at: string | null;
+    rejected_at: string | null;
+    created_at: string | null;
+    updated_at: string | null;
+};

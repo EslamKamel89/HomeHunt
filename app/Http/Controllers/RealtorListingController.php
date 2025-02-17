@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use App\Models\Offer;
 use Gate;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -54,8 +55,13 @@ class RealtorListingController extends Controller {
 		$listing
 			->load( [ 'listingImages' ] )
 			->loadCount( 'listingImages' );
+		/** @var Offer|null $offer */
+		$offer = ! auth()->id() || $listing->user_id == auth()->id() ?
+			null :
+			$listing->offers()->byMe()->first();
 		return inertia( 'Listing/Show', [ 
 			'listing' => $listing,
+			'offer' => $offer,
 		] );
 	}
 

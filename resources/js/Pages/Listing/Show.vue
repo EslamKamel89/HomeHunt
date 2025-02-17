@@ -82,8 +82,13 @@
                     </div>
                 </div>
             </Box>
-            <template v-if="$page.props.auth.user.id != listing.user_id">
+            <template
+                v-if="$page.props.auth.user.id != listing.user_id && !offer"
+            >
                 <MakeOffer :listing="listing" @offer-updated="offerUpdated" />
+            </template>
+            <template v-if="offer">
+                <OfferMade :offer="offer" />
             </template>
         </div>
     </div>
@@ -98,23 +103,25 @@ import Price from '@/Components/Price.vue';
 import Box from '@/Components/UI/Box.vue';
 import useMonthlyPayment from '@/Composables/useMonthlyPayment';
 import MainLayout from '@/Layouts/MainLayout.vue';
-import { Listing } from '@/types/types';
+import { Listing, Offer } from '@/types/types';
 import { ref } from 'vue';
 import MakeOffer from './Components/MakeOffer.vue';
+import OfferMade from './Components/OfferMade.vue';
 
 const props = defineProps<{
     listing: Listing;
+    offer?: Offer;
 }>();
 const interstRate = ref<number>(2.5);
 const duration = ref<number>(25);
-const offerPrice = ref<number>(props.listing.price);
+const offerPriceUpdate = ref<number>(props.listing.price);
 
 const offerUpdated = (offer: number) => {
-    offerPrice.value = offer;
+    offerPriceUpdate.value = offer;
 };
 
 const { monthlyPayment, totalPayment, totalInterest } = useMonthlyPayment(
-    offerPrice,
+    offerPriceUpdate,
     interstRate,
     duration,
 );

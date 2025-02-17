@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $beds

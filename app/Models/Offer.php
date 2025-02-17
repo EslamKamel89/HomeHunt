@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
+ *
  *
  * @property-read \App\Models\TFactory|null $use_factory
  * @property-read \App\Models\Listing|null $listing
@@ -32,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Offer whereRejectedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Offer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Offer whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Offer byMe()
  * @mixin \Eloquent
  */
 class Offer extends Model {
@@ -49,5 +51,8 @@ class Offer extends Model {
 	}
 	public function listing(): BelongsTo {
 		return $this->belongsTo( Listing::class);
+	}
+	public function scopeByMe( Builder $query ) {
+		return $query->where( 'user_id', auth()->id() );
 	}
 }
