@@ -1,3 +1,4 @@
+import { User } from './index.d.ts';
 export type PaginationLink = {
     url: string | null;
     label: string | null;
@@ -71,4 +72,5 @@ export type Offer = {
     rejected_at: string | null;
     created_at: string | null;
     updated_at: string | null;
+    user?: User | null;
 };

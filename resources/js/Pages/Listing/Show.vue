@@ -101,7 +101,7 @@
     >
         <Box class="my-3">
             <template #header>Offers made on your listing</template>
-            <OffersList :offers="listing.offers" class="mt-2"></OffersList>
+            <OffersList :listing="listing" class="mt-2"></OffersList>
         </Box>
     </template>
 </template>

@@ -54,7 +54,7 @@ class RealtorListingController extends Controller {
 	public function show( Listing $listing ) {
 		Gate::authorize( 'view', $listing );
 		$listing
-			->load( [ 'listingImages', 'offers' ] )
+			->load( [ 'listingImages', 'offers', 'offers.user' ] )
 			->loadCount( 'listingImages' );
 		/** @var Offer|null $offer */
 		$offer = ! auth()->id() || $listing->user_id == auth()->id() ?

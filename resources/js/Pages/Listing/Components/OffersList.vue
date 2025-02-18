@@ -1,17 +1,24 @@
 <template>
     <div class="flex flex-col gap-2">
-        <Box v-for="offer in offers" :key="offer.id!">
-            <template #header> <Price :price="offer.amount ?? 0" /> </template>
-        </Box>
+        <OfferItem
+            v-for="offer in listing.offers"
+            :key="offer.id!"
+            :offer="offer"
+            :listing-price="listing.price"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
-import Price from '@/Components/Price.vue';
-import Box from '@/Components/UI/Box.vue';
-import { Offer } from '@/types/types';
+import { Listing } from '@/types/types';
+import OfferItem from './OfferItem.vue';
 
-defineProps<{
-    offers: Offer[];
+const props = defineProps<{
+    listing: Listing;
 }>();
+
+const formateDate = (date: string | null) => {
+    if (!date) return null;
+    return new Date(date).toLocaleDateString();
+};
 </script>
