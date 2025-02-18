@@ -21,6 +21,7 @@ class RealtorListingController extends Controller {
 		$listings = Listing::where( 'user_id', auth()->id() )
 			->filter( $filters )
 			->withCount( 'listingImages' )
+			->withCount( 'offers' )
 			->paginate( 5 )->withQueryString();
 		$filters = $request->only( [ 'deleted', 'order', 'by' ] );
 		return inertia( 'Realtor/Index', get_defined_vars() );
@@ -53,7 +54,7 @@ class RealtorListingController extends Controller {
 	public function show( Listing $listing ) {
 		Gate::authorize( 'view', $listing );
 		$listing
-			->load( [ 'listingImages' ] )
+			->load( [ 'listingImages', 'offers' ] )
 			->loadCount( 'listingImages' );
 		/** @var Offer|null $offer */
 		$offer = ! auth()->id() || $listing->user_id == auth()->id() ?
@@ -103,4 +104,5 @@ class RealtorListingController extends Controller {
 		return redirect()
 			->route( 'realtor-listing.index', )->with( [ 'success', 'Listing Restored Successfully' ] );
 	}
+
 }

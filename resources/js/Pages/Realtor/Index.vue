@@ -1,6 +1,6 @@
 <template>
     <h2 class="text-2xl font-bold">Your Listing</h2>
-    <template v-if="$page.props?.flash?.success">
+    <!-- <template v-if="$page.props?.flash?.success">
         <Alert
             :isError="false"
             :content="$page.props?.flash?.success ?? 'Success'"
@@ -11,7 +11,7 @@
             :isError="true"
             :content="$page.props?.flash?.error ?? 'Error'"
         ></Alert>
-    </template>
+    </template> -->
     <RealtorFilters
         :deleted="filters?.deleted == 'true' ? true : false"
         :by="filters?.by ?? ''"
@@ -30,7 +30,6 @@
 </template>
 
 <script lang="ts" setup>
-import Alert from '@/Components/Alert.vue';
 import PaginationComp from '@/Components/PaginationComp.vue';
 import RealtorListingItem from '@/Components/RealtorListingItem.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';

@@ -7,13 +7,20 @@
         }"
     >
         <div
-            class="itmes-center flex flex-col justify-center md:flex-row md:justify-between"
+            class="itmes-center flex flex-col justify-center gap-2 md:flex-row md:justify-between"
         >
             <div
                 class="flex flex-col items-center justify-center gap-y-2 text-center"
             >
-                <Link :href="route('realtor-listing.show', { id: listing.id })">
+                <Link
+                    :href="route('realtor-listing.show', { id: listing.id })"
+                    class="flex items-center gap-3"
+                >
                     <ListingAddress :listing />
+                    <div class="btn">
+                        Details
+                        <CursorArrowRaysIcon class="h-9 w-9 text-gray-400" />
+                    </div>
                 </Link>
                 <div class="flex items-center gap-1">
                     <Price :price="listing.price" class="text-2xl font-bold" />
@@ -23,6 +30,18 @@
                 </div>
 
                 <ListingSpace :listing="listing" />
+                <Link
+                    v-if="listing.offers_count"
+                    class="btn btn-success px-7 text-white"
+                    :href="route('realtor-listing.show', { id: listing.id })"
+                >
+                    <BriefcaseIcon class="h-8 w-8" />
+                    Offers
+                    <span
+                        class="flex items-center justify-center rounded-full border px-3 py-2 text-center"
+                        >{{ listing.offers_count }}</span
+                    >
+                </Link>
             </div>
             <div
                 class="mx-auto mt-2 flex items-stretch justify-center gap-2 md:flex-col"
@@ -71,6 +90,7 @@
 <script lang="ts" setup>
 import useMonthlyPayment from '@/Composables/useMonthlyPayment';
 import { Listing } from '@/types/types';
+import { BriefcaseIcon, CursorArrowRaysIcon } from '@heroicons/vue/24/solid';
 import ListingAddress from './ListingAddress.vue';
 import ListingSpace from './ListingSpace.vue';
 import Price from './Price.vue';

@@ -92,6 +92,18 @@
             </template>
         </div>
     </div>
+    <template
+        v-if="
+            $page.props.auth.user.id == listing.user_id &&
+            listing.offers &&
+            listing.offers.length > 0
+        "
+    >
+        <Box class="my-3">
+            <template #header>Offers made on your listing</template>
+            <OffersList :offers="listing.offers" class="mt-2"></OffersList>
+        </Box>
+    </template>
 </template>
 
 <script lang="ts" setup>
@@ -103,10 +115,11 @@ import Price from '@/Components/Price.vue';
 import Box from '@/Components/UI/Box.vue';
 import useMonthlyPayment from '@/Composables/useMonthlyPayment';
 import MainLayout from '@/Layouts/MainLayout.vue';
+import MakeOffer from '@/Pages/Listing/Components/MakeOffer.vue';
+import OfferMade from '@/Pages/Listing/Components/OfferMade.vue';
 import { Listing, Offer } from '@/types/types';
 import { ref } from 'vue';
-import MakeOffer from './Components/MakeOffer.vue';
-import OfferMade from './Components/OfferMade.vue';
+import OffersList from './Components/OffersList.vue';
 
 const props = defineProps<{
     listing: Listing;

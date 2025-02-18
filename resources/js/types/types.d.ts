@@ -31,7 +31,9 @@ export type Listing = {
     price: number;
     deleted_at: string | null;
     listing_images_count?: number | null;
+    offers_count?: number | null;
     listing_images?: ListingImage[];
+    offers?: Offer[];
 };
 
 export type ListingImage = {
