@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Offer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Offer whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Offer byMe()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Offer except(int $id)
  * @mixin \Eloquent
  */
 class Offer extends Model {
@@ -54,5 +55,8 @@ class Offer extends Model {
 	}
 	public function scopeByMe( Builder $query ) {
 		return $query->where( 'user_id', auth()->id() );
+	}
+	public function scopeExcept( Builder $query, Offer $offer ) {
+		return $query->where( 'id', '!=', $offer->id );
 	}
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcceptingOfferController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
@@ -39,6 +40,7 @@ Route::middleware( 'auth' )->group( function () {
 		->only( [ 'create', 'store', 'show', 'destroy' ] );
 	Route::resource( 'listing.offer', ListingOfferController::class)
 		->only( [ 'store' ] );
+	Route::put( '/offer/{offer}/accept', AcceptingOfferController::class)->name( 'offer.accept' );
 } );
 
 Route::prefix( '/auth' )
