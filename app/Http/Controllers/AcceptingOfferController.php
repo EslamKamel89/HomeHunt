@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Offer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AcceptingOfferController extends Controller {
 	public function __invoke( Offer $offer ) {
+		Gate::authorize( 'update', $offer->listing );
 		$offer->update( [ 'accepted_at' => now(),] );
 		$offer->load( [ 'listing', 'listing.offers', 'user' ] );
 		$offer->listing->offers()

@@ -35,6 +35,7 @@ export type Listing = {
     offers_count?: number | null;
     listing_images?: ListingImage[];
     offers?: Offer[];
+    sold_at?: string | null;
 };
 
 export type ListingImage = {

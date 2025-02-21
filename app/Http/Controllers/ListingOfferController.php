@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use App\Models\Offer;
+use Gate;
 use Illuminate\Http\Request;
 
 class ListingOfferController extends Controller {
@@ -14,6 +15,7 @@ class ListingOfferController extends Controller {
 	}
 
 	public function store( Listing $listing, Request $request ) {
+		Gate::authorize( 'view', $listing );
 		$data = $request->validate( [ 
 			'amount' => [ 'required', 'numeric', 'min:1' ]
 		] );

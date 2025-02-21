@@ -38,7 +38,9 @@ class ListingPolicy {
 	 * @return bool
 	 */
 	public function view( ?User $user, Listing $listing ): bool {
-		return true;
+		if ( $listing->user_id == $user?->id )
+			return true;
+		return $listing->sold_at === null;
 	}
 
 
@@ -60,6 +62,8 @@ class ListingPolicy {
 	 * @return Response
 	 */
 	public function update( ?User $user, Listing $listing ): Response {
+		if ( $listing->user_id === $user->id && $listing->sold_at )
+			return Response::deny( "You can't update a sold Listing" );
 		return $listing->user_id === $user->id
 			? Response::allow()
 			: Response::deny( 'You do not own this listing' );

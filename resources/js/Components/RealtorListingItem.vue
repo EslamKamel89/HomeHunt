@@ -17,10 +17,10 @@
                     class="flex items-center gap-3"
                 >
                     <ListingAddress :listing />
-                    <div class="btn">
+                    <!-- <div class="btn">
                         Details
                         <CursorArrowRaysIcon class="h-9 w-9 text-gray-400" />
-                    </div>
+                    </div> -->
                 </Link>
                 <div class="flex items-center gap-1">
                     <Price :price="listing.price" class="text-2xl font-bold" />
@@ -32,15 +32,22 @@
                 <ListingSpace :listing="listing" />
                 <Link
                     v-if="listing.offers_count"
-                    class="btn btn-success px-7 text-white"
+                    class="btn px-7 text-white"
+                    :class="{
+                        'btn-warning': !listing.sold_at,
+                        'btn-success': listing.sold_at,
+                    }"
                     :href="route('realtor-listing.show', { id: listing.id })"
                 >
                     <BriefcaseIcon class="h-8 w-8" />
-                    Offers
-                    <span
-                        class="flex items-center justify-center rounded-full border px-3 py-2 text-center"
-                        >{{ listing.offers_count }}</span
-                    >
+                    <div v-if="listing.sold_at">Sold</div>
+                    <div v-else class="flex items-center gap-x-2">
+                        Offers
+                        <span
+                            class="flex items-center justify-center rounded-full border px-3 py-2 text-center"
+                            >{{ listing.offers_count }}</span
+                        >
+                    </div>
                 </Link>
             </div>
             <div
@@ -90,7 +97,7 @@
 <script lang="ts" setup>
 import useMonthlyPayment from '@/Composables/useMonthlyPayment';
 import { Listing } from '@/types/types';
-import { BriefcaseIcon, CursorArrowRaysIcon } from '@heroicons/vue/24/solid';
+import { BriefcaseIcon } from '@heroicons/vue/24/solid';
 import ListingAddress from './ListingAddress.vue';
 import ListingSpace from './ListingSpace.vue';
 import Price from './Price.vue';
