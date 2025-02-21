@@ -53,6 +53,9 @@ use Illuminate\Support\Arr;
  * @property-read int|null $listing_images_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Offer> $offers
  * @property-read int|null $offers_count
+ * @method static Builder<static>|Listing withoutSold()
+ * @property string|null $sold_at
+ * @method static Builder<static>|Listing whereSoldAt($value)
  * @mixin \Eloquent
  */
 class Listing extends Model {
@@ -68,6 +71,7 @@ class Listing extends Model {
 		'street',
 		'street_nr',
 		'price',
+		'sold_at'
 	];
 
 	protected $sortable = [ 'price', 'created_at' ];
@@ -115,7 +119,6 @@ class Listing extends Model {
 						$q->where( 'baths', $f );
 					}
 				} )->when( $filters['deleted'] ?? false, function (Builder $q, $f) {
-					// @phpstan-ignore-next-line
 					return $q->withTrashed();
 				} )->when( $filters['by'] ?? false, function (Builder $q, $f) use ($filters) {
 					if ( collect( $this->sortable )->contains( $f ) ) {
@@ -125,6 +128,13 @@ class Listing extends Model {
 					}
 				} );
 	}
+	public function scopeWithoutSold( Builder $q ) {
+		return $q->whereNull( 'sold_at' );
+		// return $q->doesntHave( 'offers' )
+		// 	->orWhereHas( 'offers',
+		// 		fn( Builder $query ) =>
+		// 		$query->whereNull( 'accepted_at' )->whereNull( 'rejected_at' )
+		// 	);
 
-
+	}
 }

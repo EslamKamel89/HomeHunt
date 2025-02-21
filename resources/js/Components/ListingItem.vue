@@ -13,7 +13,12 @@
                     <template
                         v-if="$page.props.auth.user.id == listing.user_id"
                     >
-                        <div><BookmarkIcon class="h-8 w-8" /></div>
+                        <div class="flex flex-col items-center">
+                            <BookmarkIcon class="h-8 w-8" />
+                            <div class="text-center text-xs text-gray-500">
+                                Posted by me
+                            </div>
+                        </div>
                     </template>
                 </div>
                 <div class="flex items-center gap-1">

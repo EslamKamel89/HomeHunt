@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- *
+ * 
  *
  * @property-read \App\Models\TFactory|null $use_factory
  * @property-read \App\Models\Listing|null $listing

@@ -15,6 +15,7 @@ class AcceptingOfferController extends Controller {
 		$offer->listing->offers()
 			->where( 'id', $offer->id )
 			->update( [ 'rejected_at' => null, 'accepted_at' => now() ] );
+		$offer->listing->update( [ 'sold_at' => now() ] );
 		return redirect()->back()->with( 'success', "Offer #{$offer->id} of \${$offer->amount} from {$offer->user->name} has been accepted, and all other offers have been declined." );
 	}
 }

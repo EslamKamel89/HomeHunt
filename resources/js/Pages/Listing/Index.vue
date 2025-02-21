@@ -23,14 +23,16 @@ import ListingItem from '@/Components/ListingItem.vue';
 import PaginationComp from '@/Components/PaginationComp.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { FiltersForm, Listing, Pagination } from '@/types/types';
-import { usePage } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 import Filters from './Components/Filters.vue';
+onMounted(() => {
+    router.reload();
+});
 defineProps<{
     listings: Pagination<Listing>;
     filters?: FiltersForm;
 }>();
-
-const page = usePage();
 </script>
 
 <script lang="ts">

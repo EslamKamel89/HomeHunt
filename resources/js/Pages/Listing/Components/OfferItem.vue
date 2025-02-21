@@ -36,10 +36,10 @@
             </div>
             <div class="flex flex-col justify-start gap-2">
                 <Link
+                    v-if="!(offer.accepted_at || offer.rejected_at)"
                     :href="route('offer.accept', { offer: offer.id })"
                     method="put"
                     as="button"
-                    :disabled="offer.accepted_at || offer.rejected_at"
                     class="btn btn-success text-white"
                 >
                     <CheckBadgeIcon class="h-6 w-6" />

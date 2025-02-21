@@ -17,6 +17,7 @@ class ListingController extends Controller {
 		$query = Listing::latest();
 		$query
 			->withCount( 'listingImages' )
+			->withoutSold()
 			->filter( $filters );
 		return inertia( 'Listing/Index', [ 
 			'listings' => $query->paginate( 5 )->withQueryString(),
