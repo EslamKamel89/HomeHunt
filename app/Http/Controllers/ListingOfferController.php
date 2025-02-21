@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use App\Models\Offer;
+use App\Models\User;
+use App\Notifications\OfferMade;
 use Gate;
 use Illuminate\Http\Request;
 
@@ -16,10 +18,12 @@ class ListingOfferController extends Controller {
 
 	public function store( Listing $listing, Request $request ) {
 		Gate::authorize( 'view', $listing );
+		/** @var array $data */
 		$data = $request->validate( [ 
 			'amount' => [ 'required', 'numeric', 'min:1' ]
 		] );
-		$listing->offers()->create(
+		/** @var Offer $offer*/
+		$offer = $listing->offers()->create(
 			collect( $data )
 				->merge( [ 'user_id' => auth()->id() ] )->toArray()
 		);

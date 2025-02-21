@@ -34,6 +34,8 @@ import PaginationComp from '@/Components/PaginationComp.vue';
 import RealtorListingItem from '@/Components/RealtorListingItem.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { Listing, Pagination } from '@/types/types';
+import { router } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 import RealtorFilters from './Index/Components/RealtorFilters.vue';
 
 defineOptions({ layout: MainLayout });
@@ -45,5 +47,7 @@ const props = defineProps<{
         order?: string;
     };
 }>();
-// pr(props?.listings.data.length, 'props in index.vue');
+onMounted(() => {
+    router.reload();
+});
 </script>
