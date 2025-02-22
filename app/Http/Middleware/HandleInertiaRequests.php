@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -30,7 +31,11 @@ class HandleInertiaRequests extends Middleware {
 		return [ 
 			...parent::share( $request ),
 			'auth' => [ 
-				'user' => $request->user(),
+				'user' => User::where( 'id', auth()->id() )
+					// ->with( [ 'notifications', 'unreadNotifications' ] )
+					->withCount( [ 'notifications', 'unreadNotifications' ] )
+					->first(),
+
 			],
 			'ziggy' => fn() => [ 
 				...( new Ziggy )->toArray(),

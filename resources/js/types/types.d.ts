@@ -75,3 +75,21 @@ export type Offer = {
     updated_at: string | null;
     user?: User | null;
 };
+
+type Notification<T> = {
+    id?: string | null;
+    type: string | null;
+    notifiable_type: string | null;
+    notifiable_id: number | null;
+    data: T;
+    read_at: string | null;
+    created_at: string | null;
+    updated_at: string | null;
+};
+
+type OfferNotification = {
+    offer_id: number | null;
+    listing_id: number | null;
+    amount: number | null;
+    bidder_id: number | null;
+};

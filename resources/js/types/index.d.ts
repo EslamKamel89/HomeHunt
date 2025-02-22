@@ -5,6 +5,11 @@ export interface User {
     name: string;
     email: string;
     email_verified_at?: string;
+
+    // notifications?: Nofiication[];
+    notifications_count?: number | null;
+    // unread_notifications: Notification[];
+    unread_notifications_count: number | null;
 }
 
 export type PageProps<
