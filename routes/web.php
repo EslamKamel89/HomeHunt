@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\ListingOfferController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RealtorListingController;
 use App\Http\Controllers\RealtorListingImageController;
@@ -41,6 +42,7 @@ Route::middleware( 'auth' )->group( function () {
 	Route::resource( 'listing.offer', ListingOfferController::class)
 		->only( [ 'store' ] );
 	Route::put( '/offer/{offer}/accept', AcceptingOfferController::class)->name( 'offer.accept' );
+	Route::resource( 'notification', NotificationController::class)->only( [ 'index' ] );
 } );
 
 Route::prefix( '/auth' )

@@ -77,7 +77,10 @@
                     </template>
                     <template v-if="user">
                         <li>
-                            <Link href="/" class="relative">
+                            <Link
+                                :href="route('notification.index')"
+                                class="relative"
+                            >
                                 <BellAlertIcon class="h-6 w-6 text-gray-500" />
                                 <span
                                     class="absolute right-[10px] top-0 rounded-full border border-red-500 bg-red-500 px-1 text-white"
