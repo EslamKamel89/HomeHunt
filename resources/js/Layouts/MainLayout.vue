@@ -75,15 +75,19 @@
                             </details>
                         </li>
                     </template>
-                    <li>
-                        <Link href="/" class="relative">
-                            <BellAlertIcon class="h-6 w-6 text-gray-500" />
-                            <span
-                                class="absolute right-[10px] top-0 rounded-full border border-red-500 bg-red-500 px-1 text-white"
-                                >{{ user?.unread_notifications_count }}</span
-                            >
-                        </Link>
-                    </li>
+                    <template v-if="user">
+                        <li>
+                            <Link href="/" class="relative">
+                                <BellAlertIcon class="h-6 w-6 text-gray-500" />
+                                <span
+                                    class="absolute right-[10px] top-0 rounded-full border border-red-500 bg-red-500 px-1 text-white"
+                                    >{{
+                                        user?.unread_notifications_count
+                                    }}</span
+                                >
+                            </Link>
+                        </li>
+                    </template>
                 </ul>
             </div>
         </div>
@@ -121,4 +125,11 @@ const user = computed<User | null>(() => page.props.auth?.user);
 
 const error = computed(() => page.props.flash.error);
 const success = computed(() => pr(page.props.flash.success));
+const unreadNotificationCount = computed(() => {
+    let count = Math.min(
+        page.props.auth.user.unread_notifications_count ?? 0,
+        9,
+    );
+    return count == 9 ? count : `${count}+`;
+});
 </script>
