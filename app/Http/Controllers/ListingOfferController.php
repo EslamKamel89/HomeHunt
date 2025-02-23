@@ -27,6 +27,7 @@ class ListingOfferController extends Controller {
 			collect( $data )
 				->merge( [ 'user_id' => auth()->id() ] )->toArray()
 		);
+		$listing->user->notify( new OfferMade( $offer ) );
 		return redirect()->back()->with( [ 'success' => 'Offer was made' ] );
 	}
 

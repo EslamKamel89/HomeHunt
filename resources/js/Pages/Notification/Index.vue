@@ -5,39 +5,47 @@
     <section v-if="notifications.data.length > 0" class="text-gray-700">
         <div v-for="notification in notifications.data" :key="notification.id!">
             <div
-                v-if="
-                    notification.type == 'App\\Notifications\\OfferMade' &&
-                    isOffer(notification.data)
-                "
+                class="flex items-center justify-between border-b border-gray-300 py-4"
             >
-                <div>
-                    Offer was made for this
-                    <Link
-                        class="text-blue-500 underline underline-offset-4"
-                        :href="
-                            route('realtor-listing.show', {
-                                listing: notification.notifiable_id,
-                            })
-                        "
-                        >Listing</Link
-                    >
-                    @
-                    {{ formatDate(notification.created_at) }}
-                </div>
                 <div
-                    class="flex items-center justify-between border-b border-gray-300 py-4"
+                    v-if="
+                        notification.type == 'App\\Notifications\\OfferMade' &&
+                        isOffer(notification.data)
+                    "
                 >
                     <div>
-                        Offer:
-                        <Price :price="notification.data.amount ?? 0" />
+                        Offer was made for this
+                        <Link
+                            class="text-blue-500 underline underline-offset-4"
+                            :href="
+                                route('realtor-listing.show', {
+                                    listing: notification.notifiable_id,
+                                })
+                            "
+                            >Listing</Link
+                        >
+                        @
+                        {{ formatDate(notification.created_at) }}
                     </div>
-                    <button
-                        v-if="!notification.read_at"
-                        class="btn btn-primary btn-sm text-xs uppercase"
-                    >
-                        Mark as read
-                    </button>
+                    <div>
+                        <div>
+                            Offer:
+                            <Price :price="notification.data.amount ?? 0" />
+                        </div>
+                    </div>
                 </div>
+                <Link
+                    v-if="!notification.read_at"
+                    class="btn btn-primary btn-sm text-xs uppercase"
+                    :href="
+                        route('notification.seen', {
+                            notification: notification.id,
+                        })
+                    "
+                    method="put"
+                >
+                    Mark as read
+                </Link>
             </div>
         </div>
     </section>
