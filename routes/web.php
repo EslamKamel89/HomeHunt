@@ -17,6 +17,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::get( '/test', function () {
 	Mail::raw( 'This is a test email', function ($message) {
@@ -30,7 +31,7 @@ Route::controller( IndexController::class)->group( function () {
 	// Route::get( '/hello', 'show' );
 } );
 
-Route::middleware( 'auth' )->group( function () {
+Route::middleware( [ 'auth', 'verified' ] )->group( function () {
 	Route::resource( '/listing', ListingController::class)
 		->only( [ 'index' ] );
 	Route::put( '/realtor-listing/{listing}/restore', [ RealtorListingController::class, 'restore' ] )
@@ -57,3 +58,18 @@ Route::prefix( '/auth' )
 		} );
 		Route::resource( 'user-account', UserAccountController::class)->only( [ 'create', 'store' ] );
 	} );
+
+
+Route::middleware( [ 'auth' ] )->group( function () {
+	Route::get( '/email/verify', fn() => inertia( 'Auth/VerifyEmail' ) )
+		->name( 'verification.notice' );
+	Route::get( '/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+		$request->fulfill();
+		return redirect( '/' );
+	} )->middleware( [ 'signed' ] )->name( 'verification.verify' );
+	Route::post( '/email/verification-notification', function (Request $request) {
+		$request->user()->sendEmailVerificationNotification();
+		return back()->with( 'success', 'Verification link sent!' );
+	} )->middleware( [ 'throttle:6,1' ] )->name( 'verification.send' );
+} );
+

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 /**
  * 
@@ -42,7 +43,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $offers_count
  * @mixin \Eloquent
  */
-class User extends Authenticatable {
+class User extends Authenticatable implements MustVerifyEmail {
 	/** @use HasFactory<\Database\Factories\UserFactory> */
 	use HasFactory, Notifiable;
 

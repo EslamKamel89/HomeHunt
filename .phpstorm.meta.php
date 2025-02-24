@@ -2435,8 +2435,8 @@ namespace PHPSTORM_META {
 'listing.index','realtor-listing.restore','realtor-listing.index','realtor-listing.create','realtor-listing.store',
 'realtor-listing.show','realtor-listing.edit','realtor-listing.update','realtor-listing.destroy','listing.image.create',
 'listing.image.store','listing.image.show','listing.image.destroy','listing.offer.store','offer.accept',
-'login','login.store','logout','user-account.create','user-account.store',
-'storage.local',);
+'notification.index','notification.seen','login','login.store','logout',
+'user-account.create','user-account.store','storage.local',);
         registerArgumentsSet('views', 
 'app','laravel-exceptions-renderer::components.card','laravel-exceptions-renderer::components.context','laravel-exceptions-renderer::components.editor','laravel-exceptions-renderer::components.header',
 'laravel-exceptions-renderer::components.icons.chevron-down','laravel-exceptions-renderer::components.icons.chevron-up','laravel-exceptions-renderer::components.icons.computer-desktop','laravel-exceptions-renderer::components.icons.moon','laravel-exceptions-renderer::components.icons.sun',
