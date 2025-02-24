@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Offer;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -26,17 +27,18 @@ class OfferMade extends Notification {
 	 * @return array<int, string>
 	 */
 	public function via( object $notifiable ): array {
-		return [ 'database' ];
+		return [ 'database', 'mail' ];
 	}
 
-	/**
-	 * Get the mail representation of the notification.
-	 */
-	public function toMail( object $notifiable ): MailMessage {
+
+	public function toMail( $notifiable ) {
 		return ( new MailMessage )
-			->line( 'The introduction to the notification.' )
-			->action( 'Notification Action', url( '/' ) )
-			->line( 'Thank you for using our application!' );
+			->subject( "New offer ({$this->offer->amount}) is made!" )
+			->greeting( 'Hello ' . $notifiable->name . '!' )
+			->line( 'We are happy to inform you that you have new offer on your listing.' )
+			->action( 'Listing',
+				route( 'realtor-listing.show', [ 'listing' => $this->offer->listing->id ] ) )
+			->line( 'Thank you!' );
 	}
 
 	/**

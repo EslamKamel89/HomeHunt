@@ -16,12 +16,13 @@ use App\Policies\ListingPolicy;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use Illuminate\Support\Facades\Mail;
 
 Route::get( '/test', function () {
-	/** @var ListingImage $image  */
-	$image = ListingImage::all()->first();
-	dump( str( $image->filename )->explode( 'storage/' )->last() );
+	Mail::raw( 'This is a test email', function ($message) {
+		$message->to( 'test@example.com' )
+			->subject( 'Test Email' );
+	} );
 } );
 
 Route::controller( IndexController::class)->group( function () {
