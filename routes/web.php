@@ -65,10 +65,10 @@ Route::middleware( [ 'auth' ] )->group( function () {
 		->name( 'verification.notice' );
 	Route::get( '/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
 		$request->fulfill();
-		return redirect( '/' );
+		return redirect( '/' )->with( 'success', 'You activated you account!' );
 	} )->middleware( [ 'signed' ] )->name( 'verification.verify' );
 	Route::post( '/email/verification-notification', function (Request $request) {
-		$request->user()->sendEmailVerificationNotification();
+		auth()->user()->sendEmailVerificationNotification();
 		return back()->with( 'success', 'Verification link sent!' );
 	} )->middleware( [ 'throttle:6,1' ] )->name( 'verification.send' );
 } );
